@@ -8,6 +8,7 @@ export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
+          aspect: [4, 4],
         });
     
         if (!result.canceled) {
