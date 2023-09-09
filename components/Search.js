@@ -1,11 +1,24 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Button } from '@rneui/themed';
+import { useState } from 'react';
+import { Button, Input } from '@rneui/themed';
 
 export default function Search({inSearch, setInSearch, setNewHairstyle}) {
+  const [items, setItems] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  
+  const handleSubmit = async () => {
+    fetch()
+
+  }
     return(
         <View style={styles.body}>
-            <Button onPress={()=>setInSearch(false)}>Back</Button>
+            <Button style={{marginTop: 20}}onPress={()=>setInSearch(false)}>Back</Button>
             <Text>Search</Text>
+            <Input
+            placeholder='Search Hairstyles...'
+            onChangeText={(text)=>setUserInput(text)}
+            onSubmitEditing={handleSubmit}
+            />
         </View>
     )
 }
