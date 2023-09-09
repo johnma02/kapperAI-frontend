@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Image, ActivityIndicator } from '@rneui/themed'
 import * as Font from 'expo-font';
 import Landing from './components/Landing';
+import UserPhotoInput from './components/UserPhotoInput';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -14,6 +14,13 @@ export default function App() {
       await Font.loadAsync({
         'NotoSerif-Regular': require('./assets/fonts/NotoSerif-Regular.ttf'),
         'Spectral-LightItalic': require('./assets/fonts/Spectral-LightItalic.ttf'),
+        'NotoSerif-Bold': require('./assets/fonts/NotoSerif-Bold.ttf'),
+        'NotoSerif_SemiCondensed-Bold': require('./assets/fonts/NotoSerif_SemiCondensed-Bold.ttf'),
+        'NotoSansDisplay-Bold': require('./assets/fonts/NotoSansDisplay-Bold.ttf'),
+        'NotoSansDisplay-Light': require('./assets/fonts/NotoSansDisplay-Light.ttf'),
+        'NotoSerif-Light': require('./assets/fonts/NotoSerif-Light.ttf'),
+        'FiraCode-Medium': require('./assets/fonts/FiraCode-Medium.ttf'),
+    
       });
       setFontLoaded(true);
     }
@@ -23,7 +30,10 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
+      {
+        newHairstyle ?  <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle}/> :
         <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
+      }
     </View>
   );
 }
