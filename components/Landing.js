@@ -1,42 +1,47 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from '@rneui/themed';
 import * as ImagePicker from 'expo-image-picker';
+import Search from './Search';
 
-export default function Landing({setInSearch, setNewHairstyle}) {
+export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
         });
     
-        if (!result.cancelled) {
-          setNewHairstyle(result.uri);
+        if (!result.canceled) {
+          setNewHairstyle(result.assets.at(0).uri);
         }
       }
     return (
-    <View style={styles.centeringContainer}>
-        <View style={styles.body}>
-                <Text style={styles.titleHeader}>kapper</Text>
-                <Text style={styles.text}>Start your new look by searching for or 
-                uploading a new hairstyle</Text>
-                <View style={styles.searchOrUpload}>
-                <Icon
-                    name='search'
-                    type='octicon'
-                    size={40}
-                    onPress={() => setInSearch(true)}
-                    >
-                </Icon>
-                <Icon
-                    name='cloud-upload'
-                    type='material'
-                    size={55}
-                    onPress={pickImage}
-                    >
-                </Icon>
+        <View>
+        {inSearch ? <Search inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}></Search>
+        : <View style={styles.centeringContainer}>
+            <View style={styles.body}>
+                    <Text style={styles.titleHeader}>kapper</Text>
+                    <Text style={styles.text}>Start your new look by searching for or 
+                    uploading a new hairstyle</Text>
+                    <View style={styles.searchOrUpload}>
+                    <Icon
+                        name='search'
+                        type='octicon'
+                        size={40}
+                        onPress={() => setInSearch(true)}
+                        >
+                    </Icon>
+                    <Icon
+                        name='cloud-upload'
+                        type='material'
+                        size={55}
+                        onPress={pickImage}
+                        >
+                    </Icon>
+                    </View>
                 </View>
+                <Text style={styles.text}>a pennapps production</Text>
             </View>
-            <Text style={styles.text}>a pennapps production</Text>
+        }
         </View>
     )
 }

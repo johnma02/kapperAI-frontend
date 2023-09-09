@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Image, ActivityIndicator } from '@rneui/themed'
 import * as Font from 'expo-font';
 import Landing from './components/Landing';
 
@@ -22,7 +23,7 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      <Landing setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
+        <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
     </View>
   );
 }
