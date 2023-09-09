@@ -8,6 +8,7 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [inSearch, setInSearch] = useState(false);
   const [newHairstyle, setNewHairstyle] = useState(null);
+  const [userCurrentHairstyle, setUserCurrentHairstyle] = useState(null);
 
   useEffect(() => {
     async function loadFont() {
@@ -30,10 +31,9 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      {
-        newHairstyle ?  <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle}/> :
-        <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
-      }
+      { !newHairstyle && <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>}
+      { newHairstyle && !userCurrentHairstyle && <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle} setUserCurrentHairstyle={setUserCurrentHairstyle}/>}
+      { newHairstyle && userCurrentHairstyle && <View></View>}
     </View>
   );
 }
