@@ -1,6 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from '@rneui/themed';
-export default function Landing({setInSearch}) {
+import * as ImagePicker from 'expo-image-picker';
+
+export default function Landing({setInSearch, setNewHairstyle}) {
+    async function pickImage() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+        });
+    
+        if (!result.cancelled) {
+          setNewHairstyle(result.uri);
+        }
+      }
     return (
     <View style={styles.centeringContainer}>
         <View style={styles.body}>
@@ -19,6 +31,7 @@ export default function Landing({setInSearch}) {
                     name='cloud-upload'
                     type='material'
                     size={55}
+                    onPress={pickImage}
                     >
                 </Icon>
                 </View>

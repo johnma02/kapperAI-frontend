@@ -6,6 +6,8 @@ import Landing from './components/Landing';
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [inSearch, setInSearch] = useState(false);
+  const [newHairstyle, setNewHairstyle] = useState(null);
+
   useEffect(() => {
     async function loadFont() {
       await Font.loadAsync({
@@ -20,7 +22,7 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      <Landing setInSearch={setInSearch}/>
+      <Landing setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
     </View>
   );
 }
