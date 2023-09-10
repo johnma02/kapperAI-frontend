@@ -33,7 +33,9 @@ export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
         : <View style={styles.centeringContainer}>
             <View style={styles.body}>
                     <Text style={styles.titleHeader}>kapper</Text>
-                    <Text style={styles.text}>Start your new look by searching for or 
+
+                    <Text style={styles.text}>Want to see how you'd look with a new hairstyle?</Text>
+                    <Text style={styles.text}>Start your new look off by searching for or 
                     uploading a new hairstyle</Text>
                     <View style={styles.searchOrUpload}>
                     <Icon
