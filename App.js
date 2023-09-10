@@ -3,11 +3,18 @@ import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import Landing from './components/Landing';
 import UserPhotoInput from './components/UserPhotoInput';
+import ConfirmSubmission from './components/ConfirmSubmission';
+import LoadingScreen from './components/LoadingScreen';
+import FinalProduct from './components/FinalProduct';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [inSearch, setInSearch] = useState(false);
   const [newHairstyle, setNewHairstyle] = useState(null);
+  const [userCurrentHairstyle, setUserCurrentHairstyle] = useState(null);
+  const [postRequestLoading, setPostRequestLoading] = useState(false);
+  const [postRequestSuccess, setPostRequestSuccess] = useState(false);
+  const [blendedImage, setBlendedImage] = useState('../assets/jan-ahmed-prg.png');
 
   useEffect(() => {
     async function loadFont() {
@@ -17,6 +24,7 @@ export default function App() {
         'NotoSerif-Bold': require('./assets/fonts/NotoSerif-Bold.ttf'),
         'NotoSerif_SemiCondensed-Bold': require('./assets/fonts/NotoSerif_SemiCondensed-Bold.ttf'),
         'NotoSansDisplay-Bold': require('./assets/fonts/NotoSansDisplay-Bold.ttf'),
+        'NotoSans-Regular': require('./assets/fonts/NotoSans-Regular.ttf'),
         'NotoSansDisplay-Light': require('./assets/fonts/NotoSansDisplay-Light.ttf'),
         'NotoSerif-Light': require('./assets/fonts/NotoSerif-Light.ttf'),
         'FiraCode-Medium': require('./assets/fonts/FiraCode-Medium.ttf'),
@@ -24,15 +32,47 @@ export default function App() {
       });
       setFontLoaded(true);
     }
-
     loadFont();
   }, []);
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      {
-        newHairstyle ?  <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle}/> :
-        <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
+      { !newHairstyle && 
+          <Landing 
+            inSearch={inSearch} 
+            setInSearch={setInSearch} 
+            setNewHairstyle={setNewHairstyle}/>
+            }
+      { newHairstyle && !userCurrentHairstyle && 
+          <UserPhotoInput 
+            newHairstyle={newHairstyle} 
+            setNewHairstyle={setNewHairstyle} 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}/>
+            }
+      { newHairstyle && userCurrentHairstyle && !postRequestLoading &&
+          <ConfirmSubmission 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}
+            newHairstyle={newHairstyle}
+            userCurrentHairstyle={userCurrentHairstyle}
+            setPostRequestLoading={setPostRequestLoading}
+            />
+          }
+      { postRequestLoading && !postRequestSuccess &&
+        <LoadingScreen 
+          setPostRequestLoading={setPostRequestLoading}
+          setPostRequestSuccess={setPostRequestSuccess}
+        />
+      }
+      { 
+        postRequestSuccess &&
+        <FinalProduct 
+          setUserCurrentHairstyle={setUserCurrentHairstyle}
+          setNewHairstyle={setNewHairstyle}
+          setPostRequestSuccess={setPostRequestSuccess}
+          setPostRequestLoading={setPostRequestLoading}
+          blendedImage={blendedImage}
+          setBlendedImage={setBlendedImage}
+        />
       }
     </View>
   );
@@ -56,5 +96,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '100%',
     flexDirection: 'column',
+    backgroundColor: '#f2f3f3'
   },
 });

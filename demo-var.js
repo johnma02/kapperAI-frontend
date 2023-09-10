@@ -1,0 +1,1 @@
+export const janAhmedPrg = "../assets/jan-ahmed-prg.png"; 

@@ -1,27 +1,41 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Icon } from '@rneui/themed';
+import { Icon, Image } from '@rneui/themed';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Search from './Search';
 
 export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
     async function pickImage() {
-        const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 4],
-        });
-    
-        if (!result.canceled) {
-          setNewHairstyle(result.assets.at(0).uri);
-        }
-      }
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if(status === 'granted') {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 4],
+              });
+          
+              if (!result.canceled) {
+                setNewHairstyle(result.assets.at(0).uri);
+              }
+         }
+         else{
+            Alert.alert('Media Permissions Required For This Action', 'kapper needs media permissions to use your images.', [
+                {
+                text: 'OK',
+                style: 'cancel',
+                },
+            ]);
+         }
+    }
     return (
         <View>
         {inSearch ? <Search inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}></Search>
         : <View style={styles.centeringContainer}>
             <View style={styles.body}>
                     <Text style={styles.titleHeader}>kapper</Text>
-                    <Text style={styles.text}>Start your new look by searching for or 
+
+                    <Text style={styles.text}>Want to see how you'd look with a new hairstyle?</Text>
+                    <Text style={styles.text}>Start your new look off by searching for or 
                     uploading a new hairstyle</Text>
                     <View style={styles.searchOrUpload}>
                     <Icon
@@ -39,6 +53,10 @@ export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
                         >
                     </Icon>
                     </View>
+                <Image
+                    source={require('../assets/kapper.png')}
+                    style={styles.kapper}
+                />
                 </View>
                 <Text style={styles.text}>a pennapps production</Text>
             </View>
@@ -66,7 +84,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
-    height:'90%',
+    height:'75%',
     padding: 35,
   },
   searchOrUpload: {
@@ -79,5 +97,10 @@ const styles = StyleSheet.create({
   },
   centeringContainer: {
     alignItems: 'center',
+  },
+  kapper: {
+    width: 400,
+    height: 190,
+    alignSelf: 'center',
   }
 });
