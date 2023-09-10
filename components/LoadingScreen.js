@@ -1,7 +1,10 @@
 import { StyleSheet, View, Text } from 'react-native';
-import { Image, Icon } from '@rneui/themed';
+import { Image, Icon, Dialog } from '@rneui/themed';
+import { useState } from 'react';
 
 export default function LoadingScreen({setPostRequestLoading}){
+    const [modalVisible, setModalVisible] = useState(false);
+
     return(
         <View style={styles.body}>
             <View style={styles.return}>
@@ -10,7 +13,7 @@ export default function LoadingScreen({setPostRequestLoading}){
                         type='feather'
                         size={40}
                         color={'#2d2a2a'}
-                        onPress={() => setPostRequestLoading(false)}></Icon>
+                        onPress={() => setModalVisible(true)}></Icon>
             </View>
             <Image
                 source={require('../assets/loading.gif')}
@@ -25,6 +28,17 @@ export default function LoadingScreen({setPostRequestLoading}){
                     style={styles.cat}
                 ></Image>
             </View>
+            <Dialog
+                isVisible={modalVisible}
+                onBackdropPress={()=>setModalVisible(false)}
+            >
+                <Dialog.Title title="Are you sure you want to go back?"/>
+                <Text>Your image is still being generated! You will lose your progress if you go back!</Text>
+                <Dialog.Actions>
+                    <Dialog.Button title="I want to go back!" onPress={() => setPostRequestLoading(false)}/>
+                    <Dialog.Button title="Nevermind!" onPress={()=>setModalVisible(false)}/>
+                </Dialog.Actions>
+                </Dialog>
         </View>
     )
 }
