@@ -9,7 +9,7 @@ export default function Search({ inSearch, setInSearch, setNewHairstyle }) {
 
   // does not work yet
   const handleSubmit = () => {
-    return fetch(`http://10.250.132.52:8000/search?query=${userInput}`)
+    return fetch(`http://35.199.19.81:8000//search?query=${userInput}`)
       .then((response) => response.json())
       .then((json) => {
         setItems(json);
