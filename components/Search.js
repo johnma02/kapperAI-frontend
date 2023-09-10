@@ -3,10 +3,11 @@ import { Button } from '@rneui/themed';
 
 export default function Search({inSearch, setInSearch, setNewHairstyle}) {
     return(
-        <View style={styles.body}> 
+        <View style={styles.body}>
             <Button onPress={()=>setInSearch(false)}>Back</Button>
             <Text>Search</Text>
         </View>
+
     )
 }
 

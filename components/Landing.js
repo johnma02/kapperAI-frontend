@@ -1,20 +1,32 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from '@rneui/themed';
+import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Search from './Search';
 
 export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
     async function pickImage() {
-        const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          aspect: [4, 4],
-        });
-    
-        if (!result.canceled) {
-          setNewHairstyle(result.assets.at(0).uri);
-        }
-      }
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if(status === 'granted') {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [4, 4],
+              });
+          
+              if (!result.canceled) {
+                setNewHairstyle(result.assets.at(0).uri);
+              }
+         }
+         else{
+            Alert.alert('Media Permissions Required For This Action', 'kapper needs media permissions to use your images.', [
+                {
+                text: 'OK',
+                style: 'cancel',
+                },
+            ]);
+         }
+    }
     return (
         <View>
         {inSearch ? <Search inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}></Search>

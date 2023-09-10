@@ -3,11 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import Landing from './components/Landing';
 import UserPhotoInput from './components/UserPhotoInput';
+import ConfirmSubmission from './components/ConfirmSubmission';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [inSearch, setInSearch] = useState(false);
   const [newHairstyle, setNewHairstyle] = useState(null);
+  const [userCurrentHairstyle, setUserCurrentHairstyle] = useState(null);
 
   useEffect(() => {
     async function loadFont() {
@@ -30,10 +32,25 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      {
-        newHairstyle ?  <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle}/> :
-        <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>
-      }
+      { !newHairstyle && 
+          <Landing 
+            inSearch={inSearch} 
+            setInSearch={setInSearch} 
+            setNewHairstyle={setNewHairstyle}/>
+            }
+      { newHairstyle && !userCurrentHairstyle && 
+          <UserPhotoInput 
+            newHairstyle={newHairstyle} 
+            setNewHairstyle={setNewHairstyle} 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}/>
+            }
+      { newHairstyle && userCurrentHairstyle && 
+          <ConfirmSubmission 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}
+            newHairstyle={newHairstyle}
+            userCurrentHairstyle={userCurrentHairstyle}
+            />
+          }
     </View>
   );
 }
