@@ -4,12 +4,14 @@ import * as Font from 'expo-font';
 import Landing from './components/Landing';
 import UserPhotoInput from './components/UserPhotoInput';
 import ConfirmSubmission from './components/ConfirmSubmission';
+import LoadingScreen from './components/LoadingScreen';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [inSearch, setInSearch] = useState(false);
   const [newHairstyle, setNewHairstyle] = useState(null);
   const [userCurrentHairstyle, setUserCurrentHairstyle] = useState(null);
+  const [postRequestLoading, setPostRequestLoading] = useState(false);
 
   useEffect(() => {
     async function loadFont() {
@@ -44,13 +46,19 @@ export default function App() {
             setNewHairstyle={setNewHairstyle} 
             setUserCurrentHairstyle={setUserCurrentHairstyle}/>
             }
-      { newHairstyle && userCurrentHairstyle && 
+      { newHairstyle && userCurrentHairstyle && !postRequestLoading &&
           <ConfirmSubmission 
             setUserCurrentHairstyle={setUserCurrentHairstyle}
             newHairstyle={newHairstyle}
             userCurrentHairstyle={userCurrentHairstyle}
+            setPostRequestLoading={setPostRequestLoading}
             />
           }
+      { postRequestLoading && 
+        <LoadingScreen 
+        setPostRequestLoading={setPostRequestLoading}
+        />
+      }
     </View>
   );
 }
@@ -73,5 +81,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '100%',
     flexDirection: 'column',
+    backgroundColor: '#f2f3f3'
   },
 });

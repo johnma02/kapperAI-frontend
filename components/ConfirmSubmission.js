@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import CarouselDots from './CarouselDots';
 
-export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle, userCurrentHairstyle}){
+export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle, userCurrentHairstyle, setPostRequestLoading}){
     const [index, setIndex] = useState(0);
     const images = [userCurrentHairstyle, newHairstyle];
     const width = Dimensions.get('window').width;
@@ -56,13 +56,14 @@ export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle
 
                 <View style={styles.buttonFrame}>
                     <Button
-                        ViewComponent={LinearGradient} // Don't forget this!
+                        ViewComponent={LinearGradient}
                         linearGradientProps={{
                             colors: ["#FF9800", "#F44336"],
                             start: { x: 0, y: 0.5 },
                             end: { x: 1, y: 0.5 },
                         }}
                         size={'lg'}
+                        onPress={setPostRequestLoading}
                     >
                         Let's go!{'  '}
                         <Icon
