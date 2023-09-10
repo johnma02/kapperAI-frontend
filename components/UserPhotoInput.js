@@ -63,11 +63,11 @@ export default function UserPhotoInput({newHairstyle, setNewHairstyle, setUserCu
                         onPress={() => setNewHairstyle(null)}></Icon>
                 </View>
                 <Image source={{uri: newHairstyle}} containerStyle={styles.photo} placeholderStyle={{padding: 10}}>
-                <LinearGradient
-                    colors={['rgba(0, 0, 0, 0.0)', 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.8)']}
-                    style={styles.gradient}>
-                        <Text style={styles.text}>Here's your desired hairstyle</Text>
-                </LinearGradient>
+                    <LinearGradient
+                        colors={['rgba(0, 0, 0, 0.0)', 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.8)']}
+                        style={styles.gradient}>
+                            <Text style={styles.text}>Here's your desired hairstyle</Text>
+                    </LinearGradient>
                 </Image>
                     <Text style={styles.headerText}>Next,{" "}
                         <Text style={styles.text}>snap or upload a photo of your current hairstyle</Text>

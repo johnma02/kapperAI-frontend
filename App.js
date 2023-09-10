@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
 import Landing from './components/Landing';
 import UserPhotoInput from './components/UserPhotoInput';
+import ConfirmSubmission from './components/ConfirmSubmission';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -31,9 +32,25 @@ export default function App() {
 
   return !fontLoaded ? null : (
     <View style={styles.container}>
-      { !newHairstyle && <Landing inSearch={inSearch} setInSearch={setInSearch} setNewHairstyle={setNewHairstyle}/>}
-      { newHairstyle && !userCurrentHairstyle && <UserPhotoInput newHairstyle={newHairstyle} setNewHairstyle={setNewHairstyle} setUserCurrentHairstyle={setUserCurrentHairstyle}/>}
-      { newHairstyle && userCurrentHairstyle && <View></View>}
+      { !newHairstyle && 
+          <Landing 
+            inSearch={inSearch} 
+            setInSearch={setInSearch} 
+            setNewHairstyle={setNewHairstyle}/>
+            }
+      { newHairstyle && !userCurrentHairstyle && 
+          <UserPhotoInput 
+            newHairstyle={newHairstyle} 
+            setNewHairstyle={setNewHairstyle} 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}/>
+            }
+      { newHairstyle && userCurrentHairstyle && 
+          <ConfirmSubmission 
+            setUserCurrentHairstyle={setUserCurrentHairstyle}
+            newHairstyle={newHairstyle}
+            userCurrentHairstyle={userCurrentHairstyle}
+            />
+          }
     </View>
   );
 }

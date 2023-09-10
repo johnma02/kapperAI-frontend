@@ -6,7 +6,7 @@ import Search from './Search';
 
 export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
     async function pickImage() {
-         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if(status === 'granted') {
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
