@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Dimensions, ImageBackground } from 'react-native';
-import { Image, Icon } from '@rneui/themed'
+import { Image, Icon, Button } from '@rneui/themed'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
-
+import CarouselDots from './CarouselDots';
 
 export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle, userCurrentHairstyle}){
     const [index, setIndex] = useState(0);
@@ -27,10 +27,12 @@ export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle
                 </View>
                 <Carousel
                     loop
+                    vertical={false}
                     width={width}
-                    style={styles.carousel}
                     height={height*.4765}
+                    mode="parallax"
                     data={[newHairstyle, userCurrentHairstyle]}
+                    pagingEnabled={true}
                     scrollAnimationDuration={1000}
                     onSnapToItem={(index) => setIndex(index)}
                     renderItem={({ index }) => (
@@ -48,6 +50,29 @@ export default function ConfirmSubmission({setUserCurrentHairstyle, newHairstyle
                     </Image>
                     )}
                 />
+                <CarouselDots index={index} length={images.length}/>
+                <Text style={styles.headerText}>Ready to see your new look?</Text>
+                <Text style={styles.text}>Hit the button below to see what you might look like with your new hairstyle</Text>
+
+                <View style={styles.buttonFrame}>
+                    <Button
+                        ViewComponent={LinearGradient} // Don't forget this!
+                        linearGradientProps={{
+                            colors: ["#FF9800", "#F44336"],
+                            start: { x: 0, y: 0.5 },
+                            end: { x: 1, y: 0.5 },
+                        }}
+                        size={'lg'}
+                    >
+                        Let's go!{'  '}
+                        <Icon
+                            name='rocket'
+                            type='octicon'
+                            color='white'
+                            >
+                        </Icon>
+                    </Button>
+                </View>
             </View>
         </ImageBackground>
     )
@@ -71,6 +96,12 @@ const styles = StyleSheet.create({
         position: 'relative',
         left: 10,
 
+    },
+    headerText: {
+        fontFamily: 'NotoSansDisplay-Bold',
+        fontSize: 28,
+        color: 'white',
+        position: 'relative'
     },
     return: {
         display: 'flex',
@@ -96,9 +127,9 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 45,
         padding: 10
-  },
-    carousel: {
-        marginBottom: 35,
+    },
+    buttonFrame: {
+        padding: 100
     }
 });
 
