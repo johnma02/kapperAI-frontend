@@ -5,6 +5,7 @@ import Landing from './components/Landing';
 import UserPhotoInput from './components/UserPhotoInput';
 import ConfirmSubmission from './components/ConfirmSubmission';
 import LoadingScreen from './components/LoadingScreen';
+import FinalProduct from './components/FinalProduct';
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -12,6 +13,8 @@ export default function App() {
   const [newHairstyle, setNewHairstyle] = useState(null);
   const [userCurrentHairstyle, setUserCurrentHairstyle] = useState(null);
   const [postRequestLoading, setPostRequestLoading] = useState(false);
+  const [postRequestSuccess, setPostRequestSuccess] = useState(false);
+  const [blendedImage, setBlendedImage] = useState('../assets/jan-ahmed-prg.png');
 
   useEffect(() => {
     async function loadFont() {
@@ -21,6 +24,7 @@ export default function App() {
         'NotoSerif-Bold': require('./assets/fonts/NotoSerif-Bold.ttf'),
         'NotoSerif_SemiCondensed-Bold': require('./assets/fonts/NotoSerif_SemiCondensed-Bold.ttf'),
         'NotoSansDisplay-Bold': require('./assets/fonts/NotoSansDisplay-Bold.ttf'),
+        'NotoSans-Regular': require('./assets/fonts/NotoSans-Regular.ttf'),
         'NotoSansDisplay-Light': require('./assets/fonts/NotoSansDisplay-Light.ttf'),
         'NotoSerif-Light': require('./assets/fonts/NotoSerif-Light.ttf'),
         'FiraCode-Medium': require('./assets/fonts/FiraCode-Medium.ttf'),
@@ -28,7 +32,6 @@ export default function App() {
       });
       setFontLoaded(true);
     }
-
     loadFont();
   }, []);
 
@@ -54,9 +57,21 @@ export default function App() {
             setPostRequestLoading={setPostRequestLoading}
             />
           }
-      { postRequestLoading && 
+      { postRequestLoading && !postRequestSuccess &&
         <LoadingScreen 
-        setPostRequestLoading={setPostRequestLoading}
+          setPostRequestLoading={setPostRequestLoading}
+          setPostRequestSuccess={setPostRequestSuccess}
+        />
+      }
+      { 
+        postRequestSuccess &&
+        <FinalProduct 
+          setUserCurrentHairstyle={setUserCurrentHairstyle}
+          setNewHairstyle={setNewHairstyle}
+          setPostRequestSuccess={setPostRequestSuccess}
+          setPostRequestLoading={setPostRequestLoading}
+          blendedImage={blendedImage}
+          setBlendedImage={setBlendedImage}
         />
       }
     </View>

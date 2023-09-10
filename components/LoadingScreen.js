@@ -2,22 +2,23 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Image, Icon, Dialog } from '@rneui/themed';
 import { useState } from 'react';
 
-export default function LoadingScreen({setPostRequestLoading}){
+export default function LoadingScreen({setPostRequestLoading, setPostRequestSuccess}){
     const [modalVisible, setModalVisible] = useState(false);
 
     return(
         <View style={styles.body}>
             <View style={styles.return}>
                 <Icon
-                        name='chevron-left'
-                        type='feather'
-                        size={40}
-                        color={'#2d2a2a'}
-                        onPress={() => setModalVisible(true)}></Icon>
+                    name='chevron-left'
+                    type='feather'
+                    size={40}
+                    color={'#2d2a2a'}
+                    onPress={() => setModalVisible(true)}></Icon>
             </View>
             <Image
                 source={require('../assets/loading.gif')}
                 style={styles.loading}
+                onPress={() => setPostRequestSuccess(true)}
             >
             </Image>
             <Text style={styles.text}>We are now processing your request.</Text>
