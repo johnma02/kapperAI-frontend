@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { Icon } from '@rneui/themed';
+import { Icon, Image } from '@rneui/themed';
 import { Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Search from './Search';
@@ -53,6 +53,10 @@ export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
                         >
                     </Icon>
                     </View>
+                <Image
+                    source={require('../assets/kapper.png')}
+                    style={styles.kapper}
+                />
                 </View>
                 <Text style={styles.text}>a pennapps production</Text>
             </View>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
-    height:'90%',
+    height:'75%',
     padding: 35,
   },
   searchOrUpload: {
@@ -93,5 +97,10 @@ const styles = StyleSheet.create({
   },
   centeringContainer: {
     alignItems: 'center',
+  },
+  kapper: {
+    width: 400,
+    height: 190,
+    alignSelf: 'center',
   }
 });

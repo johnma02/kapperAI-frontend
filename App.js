@@ -32,7 +32,6 @@ export default function App() {
       });
       setFontLoaded(true);
     }
-
     loadFont();
   }, []);
 
@@ -70,6 +69,7 @@ export default function App() {
           setUserCurrentHairstyle={setUserCurrentHairstyle}
           setNewHairstyle={setNewHairstyle}
           setPostRequestSuccess={setPostRequestSuccess}
+          setPostRequestLoading={setPostRequestLoading}
           blendedImage={blendedImage}
           setBlendedImage={setBlendedImage}
         />

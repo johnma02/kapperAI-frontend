@@ -1,15 +1,45 @@
 import { ImageBackground, StyleSheet, View, Text } from 'react-native';
 import { Image, Icon } from '@rneui/themed'
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect } from 'react';
+import * as MediaLibrary from 'expo-media-library';
+import * as Sharing from 'expo-sharing';
+
 
 export default function FinalProduct({
     setUserCurrentHairstyle, 
     setNewHairstyle,
     setPostRequestSuccess,
+    setPostRequestLoading,
     blendedImage,
     setBlendedImage,
 }) {
+    async function saveToCameraRoll() {
+        const { status } = await MediaLibrary.requestPermissionsAsync();
+        if(status === 'granted') {
+            await MediaLibrary.saveToLibraryAsync('../assets/jan-ahmed-prg.png');
+        }
+        else{
+            Alert.alert('Media Permissions Required For This Action', 'kapper needs media permissions to use your images.', [
+                {
+                text: 'OK',
+                style: 'cancel',
+                },
+            ]);
+        } 
+    }
+    function clearAll() {
+        setUserCurrentHairstyle(null);
+        setNewHairstyle(null);
+        setPostRequestSuccess(false);
+        setPostRequestLoading(false);
+        setBlendedImage('../assets/jan-ahmed-prg.png');
+    }
+    
+    async function shareImage() {
+        await Sharing.isAvailableAsync()
+        .then((result)=>result ? Sharing.shareAsync('../assets/jan-ahmed-prg.png') : null)
+    }
+
     return(
         <View style={styles.body}>
             <View style={styles.return}>
@@ -24,7 +54,7 @@ export default function FinalProduct({
                     type='feather'
                     size={35}
                     color={'#2D2A2A'}
-                    onPress={() => setNewHairstyle(null)}></Icon>
+                    onPress={() => setPostRequestSuccess(false)}></Icon>
             </View>
             <Image source={
                 require('../assets/jan-ahmed-prg.png') 
@@ -44,7 +74,7 @@ export default function FinalProduct({
                         type='octicon'
                         size={35}
                         color={'#2D2A2A'}
-                        onPress={() => setNewHairstyle(null)}></Icon>
+                        onPress={() => clearAll()}></Icon>
                 </View>
                 <Text style={styles.titleHeader}>kapper</Text>
                 <View style={styles.shareDownload}>
@@ -53,14 +83,14 @@ export default function FinalProduct({
                         type='feather'
                         size={35}
                         color={'#2D2A2A'}
-                        onPress={() => (null)}></Icon>
+                        onPress={() => saveToCameraRoll()}></Icon>
                     <Icon></Icon>
                     <Icon
                         name='share'
                         type='feather'
                         size={35}
                         color={'#2D2A2A'}
-                        onPress={() => setNewHairstyle(null)}></Icon>
+                        onPress={() => shareImage()}></Icon>
                     <Icon></Icon>
                 </View>
             </View>
