@@ -53,11 +53,12 @@ export default function Landing({inSearch, setInSearch, setNewHairstyle}) {
                         >
                     </Icon>
                     </View>
+                </View>
                 <Image
                     source={require('../assets/kapper.png')}
                     style={styles.kapper}
-                />
-                </View>
+                >
+                </Image>
                 <Text style={styles.text}>a pennapps production</Text>
             </View>
         }
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
-    height:'75%',
     padding: 35,
   },
   searchOrUpload: {
@@ -97,10 +97,12 @@ const styles = StyleSheet.create({
   },
   centeringContainer: {
     alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '90%',
   },
   kapper: {
     width: 400,
-    height: 190,
+    height: '50%',
     alignSelf: 'center',
   }
 });
